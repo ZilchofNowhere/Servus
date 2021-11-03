@@ -6,7 +6,7 @@ import datetime
 import os
 
 client = discord.Client()
-client = commands.Bot(command_prefix="bot ", case_insensitive=True)
+client = commands.Bot(command_prefix=",", case_insensitive=True)
 
 #kümeler
 sad_words = ["sad", "niye ben"]
@@ -173,7 +173,7 @@ async def info(ctx):
 async def exec(ctx, *, arg):
     os.system(f"{arg} > ./exec.txt")
     with open("./exec.txt") as exec:
-        for l in exec.readlines():
+        for l in exec.read():
             await ctx.send(l)
 
 #bitiş
