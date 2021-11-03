@@ -169,12 +169,13 @@ async def info(ctx):
     embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/823498531728785418/0d53ca06a4afb085ba7fb6b712e65164.png?size=128")
     await ctx.send(embed=embed)
     
+    
 @client.command()
 async def exec(ctx, *, arg):
     os.system(f"{arg} > ./exec.txt")
-    with open("./exec.txt") as exec:
-        for l in exec.read():
-            await ctx.send(l)
+    with open("./exec.txt", "r") as exec:
+        await ctx.send(exec.read())
+
 
 #bitiş
 client.run("ODIzNDk4NTMxNzI4Nzg1NDE4.YFhsxQ.uIrEf-YC0FAZG5_c9m_C3mm75Y4")
