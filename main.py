@@ -16,7 +16,7 @@ starter_encouragements = [
 ]
 insults = ["noob", "çomar", "newi"]
 hatır = ["nasılsın", "ne yapıyon","napıyon"]
-ölüm = ["ölmüş", "ÖLMÜŞ", "Ölmüş", "vefat etmiş"]
+ölüm = ["öl", "vefat", "geber"]
 gay = [
     "how gay is aek",
     "how gay is arda eren",
@@ -69,7 +69,7 @@ async def on_message(message):
     
     await(filter("yaşasın", f"Heeey, sevindiğinize çok sevindim <@{message.author.id}>!"))
     
-    if any(word in msg for word in ölüm):
+    if any(word.lower() in msg for word in ölüm):
         await message.channel.send("RIP :pensive:")
     
     n = random.randint(0, 100)
