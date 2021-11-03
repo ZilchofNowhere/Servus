@@ -173,7 +173,6 @@ async def info(ctx):
 async def exec(ctx, *, arg):
     os.system(f"{arg} > ./exec.txt")
     with open("./exec.txt") as exec:
-
         await ctx.send(exec.read())
 
 #bitiş
