@@ -171,9 +171,11 @@ async def info(ctx):
     
 @client.command()
 async def exec(ctx, *, arg):
+    res = ""
     os.system(f"{arg} > exec.txt")
     with open("exec.txt", "r") as exec:
-        await ctx.send(exec.read())
+        for line in exec:
+            res += f"{line}\n"
 
 #bitiş
 client.run("ODIzNDk4NTMxNzI4Nzg1NDE4.YFhsxQ.uIrEf-YC0FAZG5_c9m_C3mm75Y4")
