@@ -9,7 +9,7 @@ client = discord.Client()
 client = commands.Bot(command_prefix=",", case_insensitive=True)
 
 #kümeler
-sad_words = ["sad", "niye ben"]
+sad_words = ["sad\0", "niye ben"]
 starter_encouragements = [
     "Mutlu olmanızı emrediyorum",
     "Mutsuz olmanız yasaklanmıştır",
