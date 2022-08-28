@@ -1,12 +1,12 @@
-import discord
-import random
-import time
+import discord, random, os, time, datetime 
 from discord.ext import commands
-import datetime
-import os
+from music_cog import music_cog
 
 client = discord.Client()
-client = commands.Bot(command_prefix=",", case_insensitive=True)
+client = commands.Bot(command_prefix=";", case_insensitive=True)
+
+client.add_cog(music_cog(client))
+client.remove_command("help")
 
 #kümeler
 sad_words = ["sad", "niye ben"]
@@ -17,7 +17,7 @@ starter_encouragements = [
 ]
 insults = ["noob", "çomar", "newi"]
 hatır = ["nasılsın", "ne yapıyon","napıyon"]
-ölüm = ["öl", "vefat", "geber"]
+ölüm = ["ölmüş", "ÖLMÜŞ", "Ölmüş", "vefat etmiş"]
 gay = [
     "how gay is aek",
     "how gay is arda eren",
@@ -70,7 +70,7 @@ async def on_message(message):
     
     await(filter("yaşasın", f"Heeey, sevindiğinize çok sevindim <@{message.author.id}>!"))
     
-    if any(word.lower() in msg for word in ölüm):
+    if any(word in msg for word in ölüm):
         await message.channel.send("RIP :pensive:")
     
     n = random.randint(0, 100)
@@ -102,10 +102,8 @@ async def on_message(message):
     await(filter("günaydın", f"Sağ ol <@{message.author.id}>"))
     
     if message.channel.id == 834836887998169118 and message.author.id == 751512679394312313:
-        return
         await message.channel.purge(limit=1)
     elif message.channel.id == 834836887998169118 and message.author.id == 634136510375002143:
-        return
         await message.channel.purge(limit=1)
     elif message.channel.id == 834836887998169118 and msg == "":
         return
@@ -125,6 +123,8 @@ async def on_message(message):
         await message.channel.send(eval(msg.lstrip("sfac")))
 """
 
+
+
     await(filter("!crusade", "Sorry, MEE6 is dead :pensive:\nBut maybe <@484438480773054485> could give you the role"))
     await(filter("favori charın ne", "Tabii ki Kartheon"))
     await(filter("ping", f"Pinginiz {round(client.latency * 1000)} ms"))
@@ -136,31 +136,38 @@ async def on_message(message):
 async def beep(ctx):
     await ctx.send("Boop!")
 
-@client.command(name="servushelp")
-async def _help(ctx):
+@client.command(name="help")
+async def _help(ctx: discord.TextChannel):
     embedVar = discord.Embed(title="İşte mevcut komutlar", description="Daha fazla komut için takip edip like atmayı unutmayın", color=0x00c18e)
     embedVar.add_field(name="how gay", value="Arkadaşınız ne kadar gay :rainbow_flag:", inline=False)
     embedVar.add_field(name="how smart", value="Arkadaşınız ne kadar akıllı :brain:", inline=False)
     embedVar.add_field(name="hack", value="Sunucudakilere küçük ve tatsız sürprizler yapın :keyboard:", inline=False)
-    embedVar.add_field(name="bot rickroll", value="We do a little trolling :slight_smile:", inline=False)
+    embedVar.add_field(name=";rickroll", value="We do a little trolling :slight_smile:", inline=False)
     embedVar.add_field(name="del", value="Mesaj silmek için butona gerek yok artık", inline=False)
     embedVar.add_field(name="crusade", value="Kutsal topraklara bir yolculuk... :sword:", inline=False)
     embedVar.add_field(name="ping", value="Gecikmenizi öğrenin", inline=False)
-    embedVar.add_field(name="bot beep", value="Botun hayatta olduğundan emin olun :heart:", inline=False)
-    embedVar.add_field(name="bot parrot", value="Botunuz niye bir papağan olmasın ki :parrot:", inline=False)
-    embedVar.add_field(name="bot info", value="Sunucunuz hakkında biraz bilgi edinin", inline=False)
+    embedVar.add_field(name=";beep", value="Botun hayatta olduğundan emin olun :heart:", inline=False)
+    embedVar.add_field(name=";parrot", value="Botunuz niye bir papağan olmasın ki :parrot:", inline=False)
+    embedVar.add_field(name=";info", value="Sunucunuz hakkında biraz bilgi edinin", inline=False)
+    embedVar.add_field(name=";play", value="Bir şarkı çalın :musical_note:", inline=False)
+    embedVar.add_field(name=";queue", value="Sıradaki şarkıları görün :musical_score:", inline=False)
+    embedVar.add_field(name=";skip", value="Çalan şarkıyı atlayın :next_track:", inline=False)
+    embedVar.add_field(name=";clear", value="Sırayı temizleyin, çalacak şarkılar için beyaz bir sayfa açın :page_facing_up:", inline=False)
+    embedVar.add_field(name=";pause", value="Çalan şarkıyı durdurun :stop_sign:", inline=False)
+    embedVar.add_field(name=";resume", value="Durdurduğunuz şarkıyı devam ettirin :arrow_forward:", inline=False)
+    embedVar.add_field(name=";dc", value="Leave the connected voice channel :wave:", inline=False)
     await ctx.send(embed=embedVar)
 
 @client.command()
-async def rickroll(ctx):
+async def rickroll(ctx: discord.TextChannel):
     await ctx.send("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstleyVEVO")
 
-@client.command()          #birden fazla kelimeyse tırnakla
-async def parrot(ctx, arg):
+@client.command()  #birden fazla kelimeyse tırnakla
+async def parrot(ctx: discord.TextChannel, arg):
     await ctx.send(arg)
 
 @client.command()
-async def info(ctx):
+async def info(ctx: discord.TextChannel):
     embed = discord.Embed(title=f"{ctx.guild.name}", description="İşte bulunduğunuz server hakkında bilgiler ", timestamp=datetime.datetime.utcnow(), color=discord.Color.blue())
     embed.add_field(name="Server created at", value=f"{ctx.guild.created_at}")
     embed.add_field(name="Server Owner", value=f"{ctx.guild.owner}")
@@ -170,10 +177,10 @@ async def info(ctx):
     await ctx.send(embed=embed)
     
 @client.command()
-async def exec(ctx, *, arg):
+async def exec(ctx: discord.TextChannel, *, arg):
     os.system(f"{arg} > ./exec.txt")
-    with open("./exec.txt") as exec:
+    with open("./exec.txt", "r") as exec:
         await ctx.send(exec.read())
 
 #bitiş
-client.run("ODIzNDk4NTMxNzI4Nzg1NDE4.YFhsxQ.uIrEf-YC0FAZG5_c9m_C3mm75Y4")
+client.run(TOKEN)
