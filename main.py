@@ -44,7 +44,6 @@ async def on_message(message):
     if message.author == client.user:
         return
     msg = message.content.lower()
-    yaz = message.channel.send
 
     async def filter(x, y):
         if msg.startswith(x):
@@ -53,9 +52,6 @@ async def on_message(message):
     if msg.startswith("$hello"):
         await message.channel.send("Hello!")
     
-    if message.author.id == 643477588022657035:
-        return
-
     if any(word in msg for word in insults):
         await message.channel.send("Mazlumlar korumam altındadır :angry: (uğur hariç, uğur gerçek bir noobtur)")
     
@@ -79,7 +75,7 @@ async def on_message(message):
     elif msg.startswith("how gay is"):
         await message.channel.send(f"Sorduğunuz kişi %{n} gay")
 
-    iq = random.randint(10, 300)
+    iq = random.randint(10, 250)
     if any(word in msg for word in smart):
         await message.channel.send("Sorduğunuz kişinin iqsu 300 puan")
     elif msg.startswith("how smart is"):
@@ -111,7 +107,7 @@ async def on_message(message):
         await message.channel.send(msg)  
 
     if msg.startswith("del"):
-        await message.channel.purge(limit=2)
+        await message.channel.purge(limit=int(msg.split(" ")[1]) + 1)
 
     if any(word in msg for word in sad_words):
         await message.channel.send(random.choice(starter_encouragements))    
