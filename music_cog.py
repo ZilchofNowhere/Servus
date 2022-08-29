@@ -121,6 +121,6 @@ class music_cog(commands.Cog):
     async def leave(self, ctx):
         self.is_playing = False
         self.is_paused = True
-        ctx.send("Görüşürüz :wave:")
+        await ctx.send("Görüşürüz :wave:")
         await self.vc.disconnect()
          
